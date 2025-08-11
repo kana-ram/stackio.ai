@@ -43,3 +43,13 @@ app.use('/chats', chatRoutes);
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+app.get("/test-gemini", async (req, res) => {
+  try {
+    const prompt = "Write a short welcome message for Stackio.ai users.";
+    const result = await model.generateContent(prompt);
+    res.json({ response: result.response.text() });
+  } catch (err) {
+    console.error("❌ Gemini Test Error:", err);
+    res.status(500).json({ error: "Gemini test failed" });
+  }
+});
